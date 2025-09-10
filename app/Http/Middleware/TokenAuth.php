@@ -4,17 +4,37 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class TokenAuth
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        try {
+            $bearer = $request->bearerToken();
+
+            if (!$bearer) {
+                return response()->json(['message' => 'Token não informado'], 401);
+            }
+
+            $user = User::where('token', $bearer)->first();
+
+            if (!$user) {
+                return response()->json(['message' => 'Token inválido'], 401);
+            }
+
+            // create_token é convertido para o fomato de data dentro do model do usuário
+            if (!$user->create_token || $user->create_token->addHours(2)->isPast()) {
+                return response()->json(['message' => 'Token expirado'], 401);
+            }
+
+            // define o usuário autenticado no runtime
+            Auth::setUser($user);
+
+            return $next($request);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Erro ao validar token', 'error' => $e->getMessage()], 500);
+        }
     }
 }
