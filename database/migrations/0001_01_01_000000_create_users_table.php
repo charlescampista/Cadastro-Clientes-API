@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('token', 120)->nullable(); // O token é armazenado aqui
+            $table->timestamp('create_token')->nullable(); // Armazena o momento em que o token foi criado
             $table->rememberToken();
             $table->timestamps();
         });
