@@ -7,22 +7,24 @@ use Illuminate\Foundation\Http\FormRequest;
 class RegisterUserRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Determina se o usuário está autorizado a fazer esta requisição.
      */
-    public function authorize(): bool
+    public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Regras de validação que são aplicadas a esta requisição.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:191',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
         ];
     }
 }
