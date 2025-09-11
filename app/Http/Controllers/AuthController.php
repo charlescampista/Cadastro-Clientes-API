@@ -16,8 +16,9 @@ class AuthController extends Controller
     // Cria um novo usuário
     public function register(RegisterUserRequest $request)
     {
+        $data = $request->validated();
+        
         try {
-            $data = $request->validated();
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
@@ -25,7 +26,7 @@ class AuthController extends Controller
                 'token' => null,
                 'create_token' => null,
             ]);
-
+            
             return response()->json([
                 'message' => 'Usuário criado com sucesso',
                 'user' => [
@@ -35,16 +36,16 @@ class AuthController extends Controller
                 ]
             ], 201);
         } catch (\Throwable $e) {
-            return response()->json(['message' => 'Erro ao criar usuário', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Erro ao autenticar', 'error' => $e->getMessage()], 500);
         }
     }
 
     // Realiza login, gera token e salva token + create_token
     public function login(LoginRequest $request)
     {
+        $data = $request->validated();
+        
         try {
-            $data = $request->validated();
-
             $user = User::where('email', $data['email'])->first();
 
             if (!$user || !Hash::check($data['password'], $user->password)) {

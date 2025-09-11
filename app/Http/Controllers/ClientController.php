@@ -26,8 +26,8 @@ class ClientController extends Controller
     // Criar cliente
     public function store(StoreClientRequest $request)
     {
+        $data = $request->validated();
         try {
-            $data = $request->validated();
             $client = Client::create($data);
 
             return response()->json([

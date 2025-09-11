@@ -52,10 +52,18 @@
 
 ## Alguns exemplos de requisições com cURL
 
+### Importante:
+Para que receber as respostas em JSON você deve configurar o **header** das suas requisições para receber este devido formato:
+````
+-H "Content-Type: application/json" \
+-H "Accept: application/json" \
+````
+
 #### 1. Registrar usuário
 ````
 curl -X POST http://127.0.0.1:8000/api/auth/register \
  -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
  -d '{"name":"John Doe","email":"john@example.com","password":"password"}'
 
 ````
@@ -64,6 +72,7 @@ curl -X POST http://127.0.0.1:8000/api/auth/register \
 ````
 curl -X POST http://127.0.0.1:8000/api/auth/login \
  -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
  -d '{"email":"john@example.com","password":"password"}'
 
 ```` 
@@ -82,6 +91,7 @@ curl -X POST http://127.0.0.1:8000/api/auth/login \
 ````
 curl -X POST http://127.0.0.1:8000/api/clients \
  -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
  -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>" \
  -d '{"name":"Cliente Exemplo","email":"cliente@ex.com","phone":"1199999-9999","address":"Rua A, 123","city":"Teresópolis","state":"RJ"}'
 
@@ -90,13 +100,18 @@ curl -X POST http://127.0.0.1:8000/api/clients \
 #### 4. Listar clientes (protegido)
 ````
 curl -X GET http://127.0.0.1:8000/api/clients \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
  -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
+ 
 
 ````
 
 #### 5. Excluir cliente (protegido)
 ````
 curl -X DELETE http://127.0.0.1:8000/api/clients/1 \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
  -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
 
 ````
@@ -104,6 +119,8 @@ curl -X DELETE http://127.0.0.1:8000/api/clients/1 \
 #### 6. Logout (invalida token)
 ````
 curl -X POST http://127.0.0.1:8000/api/auth/logout \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
  -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
 
 ````
