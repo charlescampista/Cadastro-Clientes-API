@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,45 @@ class ClientController extends Controller
             ], 201);
         } catch (\Throwable $e) {
             return response()->json(['message' => 'Erro ao criar cliente', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    // Obter cliente por ID
+    public function show($id)
+    {
+        try {
+            $client = Client::find($id);
+
+            if (!$client) {
+                return response()->json(['message' => 'Cliente não encontrado'], 404);
+            }
+
+            return response()->json(['client' => $client], 200);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Erro ao buscar cliente', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    // Atualizar cliente
+    public function update(UpdateClientRequest $request, $id)
+    {
+        $data = $request->validated();
+
+        try {
+            $client = Client::find($id);
+
+            if (!$client) {
+                return response()->json(['message' => 'Cliente não encontrado'], 404);
+            }
+
+            $client->update($data);
+
+            return response()->json([
+                'message' => 'Cliente atualizado com sucesso',
+                'client' => $client
+            ], 200);
+        } catch (\Throwable $e) {
+            return response()->json(['message' => 'Erro ao atualizar cliente', 'error' => $e->getMessage()], 500);
         }
     }
 

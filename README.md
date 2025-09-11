@@ -124,3 +124,68 @@ curl -X POST http://127.0.0.1:8000/api/auth/logout \
  -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
 
 ````
+
+#### 7. Obter cliente por ID (protegido)
+````
+curl -X GET http://127.0.0.1:8000/api/clients/1 \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
+ -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
+
+````
+
+#### 8. Atualizar cliente (protegido)
+````
+curl -X PUT http://127.0.0.1:8000/api/clients/1 \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
+ -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>" \
+ -d '{"name":"Cliente Atualizado","city":"Nova Cidade"}'
+
+````
+
+#### 9. Obter usuário por ID (protegido)
+````
+curl -X GET http://127.0.0.1:8000/api/users/1 \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
+ -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
+
+````
+
+#### 10. Obter usuário por ID (protegido)
+````
+curl -X GET http://127.0.0.1:8000/api/users/1 \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
+ -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
+
+````
+
+#### 11. Listar todos os usuários (protegido)
+````
+curl -X GET http://127.0.0.1:8000/api/users \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
+ -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
+
+````
+
+#### 12. Atualizar usuário (protegido)
+````
+curl -X PUT http://127.0.0.1:8000/api/users/1 \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
+ -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>" \
+ -d '{"name":"Usuário Atualizado","password":"novasenha"}'
+
+````
+
+#### 13. Deletar usuário (protegido)
+````
+curl -X DELETE http://127.0.0.1:8000/api/users/1 \
+ -H "Content-Type: application/json" \
+ -H "Accept: application/json" \
+ -H "Authorization: Bearer <COLE_SEU_TOKEN_AQUI>"
+
+````
